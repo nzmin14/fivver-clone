@@ -1,0 +1,38 @@
+"use client"
+
+interface CreateFormProps{
+    username: String
+
+}
+
+const CreateFormSchema = z.object({
+    title: z
+    .string()
+    .min(20, {
+        message: "Title must be at least 20 characters.",
+    })
+    .max(100, {
+        message: "Title must not be longer than 100 characters.",
+    }),
+    category: z
+    .string({
+        required_error: "Please select category.",
+    }),
+    subcategoryId: z
+    .string({
+        required_error: "Please select a subcategory.",
+    })
+})
+
+type CreateFormValues = z.infer<typeof CreateFormSchema>
+
+const defaulValues: Partial<CreateFormValues> = {
+    title: "",
+}
+
+export const CreateForm = ({
+    username
+}: CreateFormProps) => {
+    const categories = useQuery(api.categories.get);
+    const [subcategories, setSubcategories] = useState<Doc<"subcategories">[]>([]);
+}
